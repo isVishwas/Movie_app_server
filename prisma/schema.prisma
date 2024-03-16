@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// prisma/schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Movie {
+  id           Int      @id @default(autoincrement())
+  name         String
+  release_date  DateTime
+  rating      Int
+}
+
+model Review {
+  id          Int       @id @default(autoincrement()) // Unique identifier for the review
+  movie_id     Int                                      // ID of the movie being reviewed
+  reviewer    String?                                  // Name of the reviewer (optional)
+  rating      Int      
+  comment    String                                   // Review comments
+  createdAt   DateTime  @default(now())               // Timestamp when the review was created
+  updatedAt   DateTime  @updatedAt 
+}
